@@ -7,6 +7,6 @@ package site.sanniu.mybatis.test;
  **/
 public interface IUserMapper {
 
-    String getUesrName();
+    String getUesrById(long id);
 
 }
