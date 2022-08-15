@@ -2,6 +2,10 @@ package site.sanniu.mybatis.session;
 
 import site.sanniu.mybatis.binding.MapperRegistry;
 import site.sanniu.mybatis.datasource.druid.DruidDataSourceFactory;
+import site.sanniu.mybatis.datasource.pooled.PooledDataSource;
+import site.sanniu.mybatis.datasource.pooled.PooledDataSourceFactory;
+import site.sanniu.mybatis.datasource.unpooled.UnpooledDataSource;
+import site.sanniu.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
 import site.sanniu.mybatis.mapping.Environment;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.mapping.XNode;
@@ -44,6 +48,8 @@ public class Configuration {
     public Configuration() {
         typeAliasRegistry.registerAlias("JDBC", JdbcTransactionFactory.class);
         typeAliasRegistry.registerAlias("DRUID", DruidDataSourceFactory.class);
+        typeAliasRegistry.registerAlias("UNPOOLED", UnpooledDataSourceFactory.class);
+        typeAliasRegistry.registerAlias("POOLED", PooledDataSourceFactory.class);
     }
 
     public TypeAliasRegistry getAliasRegistry() {
