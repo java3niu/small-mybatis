@@ -4,7 +4,7 @@ import site.sanniu.mybatis.executor.Executor;
 import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
-import sun.plugin2.main.server.ResultHandler;
+import site.sanniu.mybatis.session.ResultHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ import java.util.List;
 public class PreparedStatementHandler extends BaseStatementHandler {
 
     public PreparedStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, ResultHandler resultHandler, BoundSql boundSql) {
-        super(executor, mappedStatement, parameterObject, resultHandler, boundSql);
+        super(executor, mappedStatement, resultHandler,parameterObject, boundSql);
     }
 
     @Override

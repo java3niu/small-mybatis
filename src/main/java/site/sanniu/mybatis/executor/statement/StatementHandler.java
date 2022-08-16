@@ -1,6 +1,5 @@
 package site.sanniu.mybatis.executor.statement;
-
-import sun.plugin2.main.server.ResultHandler;
+import site.sanniu.mybatis.session.ResultHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;

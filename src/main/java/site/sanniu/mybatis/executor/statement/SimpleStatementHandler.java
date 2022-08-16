@@ -4,7 +4,7 @@ import site.sanniu.mybatis.executor.Executor;
 import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
-import sun.plugin2.main.server.ResultHandler;
+import site.sanniu.mybatis.session.ResultHandler;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -18,8 +18,8 @@ import java.util.List;
  **/
 public class SimpleStatementHandler extends BaseStatementHandler{
 
-    public SimpleStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, ResultSetHandler resultSetHandler, BoundSql boundSql) {
-        super(executor, mappedStatement, parameterObject, resultSetHandler, boundSql);
+    public SimpleStatementHandler(Executor executor, MappedStatement mappedStatement, ResultHandler resultHandler, Object parameterObject, BoundSql boundSql) {
+        super(executor, mappedStatement,resultHandler, parameterObject, boundSql);
     }
 
     @Override
