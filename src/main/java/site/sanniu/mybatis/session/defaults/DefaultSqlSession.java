@@ -1,5 +1,6 @@
 package site.sanniu.mybatis.session.defaults;
 
+import site.sanniu.mybatis.executor.Executor;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.mapping.XNode;
 import site.sanniu.mybatis.session.Configuration;
@@ -22,8 +23,11 @@ public class DefaultSqlSession implements SqlSession {
 
     private Configuration configuration;
 
-    public DefaultSqlSession(Configuration configuration) {
+    private Executor executor;
+
+    public DefaultSqlSession(Configuration configuration,Executor executor) {
         this.configuration = configuration;
+        this.executor = executor;
     }
 
     @Override

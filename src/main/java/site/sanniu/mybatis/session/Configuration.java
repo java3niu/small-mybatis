@@ -6,9 +6,17 @@ import site.sanniu.mybatis.datasource.pooled.PooledDataSource;
 import site.sanniu.mybatis.datasource.pooled.PooledDataSourceFactory;
 import site.sanniu.mybatis.datasource.unpooled.UnpooledDataSource;
 import site.sanniu.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
+import site.sanniu.mybatis.executor.Executor;
+import site.sanniu.mybatis.executor.SimpleExecutor;
+import site.sanniu.mybatis.executor.resultset.DefaultResultSetHandler;
+import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
+import site.sanniu.mybatis.executor.statement.PreparedStatementHandler;
+import site.sanniu.mybatis.executor.statement.StatementHandler;
+import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.Environment;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.mapping.XNode;
+import site.sanniu.mybatis.transaction.Transaction;
 import site.sanniu.mybatis.transaction.jdbc.JdbcTransaction;
 import site.sanniu.mybatis.transaction.jdbc.JdbcTransactionFactory;
 import site.sanniu.mybatis.type.TypeAliasRegistry;
@@ -88,4 +96,19 @@ public class Configuration {
         return mappedStatements.get(id);
     }
 
+
+    /**
+     * 创建结果集处理器
+     */
+    public ResultSetHandler newResultSetHandler(Executor executor, MappedStatement mappedStatement, BoundSql boundSql){
+        return new DefaultResultSetHandler(executor, mappedStatement, boundSql);
+    }
+
+    public Executor newExecutor(Transaction transaction){
+        return new SimpleExecutor(this,transaction);
+    }
+
+    public StatementHandler newStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameter, ResultHandler resultHandler, BoundSql boundSql){
+        return new PreparedStatementHandler(executor, mappedStatement, parameter, resultHandler, boundSql);
+    }
 }

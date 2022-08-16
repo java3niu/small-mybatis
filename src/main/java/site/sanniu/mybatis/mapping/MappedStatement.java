@@ -5,6 +5,7 @@ import site.sanniu.mybatis.session.Configuration;
 import java.util.Map;
 
 /**
+ * SQL 语句的封装
  * @Author sanniu
  * @Description //TODO $
  * @Date $ $
