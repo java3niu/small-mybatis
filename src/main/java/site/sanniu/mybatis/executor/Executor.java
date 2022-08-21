@@ -2,8 +2,8 @@ package site.sanniu.mybatis.executor;
 
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
+import site.sanniu.mybatis.session.ResultHandler;
 import site.sanniu.mybatis.transaction.Transaction;
-import sun.plugin2.main.server.ResultHandler;
 
 import java.sql.SQLException;
 import java.util.List;

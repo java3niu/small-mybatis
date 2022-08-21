@@ -1,12 +1,11 @@
 package site.sanniu.mybatis.executor;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.session.Configuration;
+import site.sanniu.mybatis.session.ResultHandler;
 import site.sanniu.mybatis.transaction.Transaction;
-import sun.plugin2.main.server.ResultHandler;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,19 +16,17 @@ import java.util.List;
  * @Description //TODO $
  * @Date $ $
  **/
-public abstract class BaseExecutor implements Executor{
+public abstract class BaseExecutor implements Executor {
 
-    private Logger logger = LoggerFactory.getLogger(BaseExecutor.class);
+    private org.slf4j.Logger logger = LoggerFactory.getLogger(BaseExecutor.class);
 
     protected Configuration configuration;
-
     protected Transaction transaction;
-
     protected Executor wrapper;
 
     private boolean closed;
 
-    public BaseExecutor(Configuration configuration, Transaction transaction) {
+    protected BaseExecutor(Configuration configuration, Transaction transaction) {
         this.configuration = configuration;
         this.transaction = transaction;
         this.wrapper = this;
@@ -37,18 +34,17 @@ public abstract class BaseExecutor implements Executor{
 
     @Override
     public <E> List<E> query(MappedStatement ms, Object parameter, ResultHandler resultHandler, BoundSql boundSql) {
-        if(closed){
+        if (closed) {
             throw new RuntimeException("Executor was closed.");
         }
-        return doQuery(ms,parameter,resultHandler,boundSql);
+        return doQuery(ms, parameter, resultHandler, boundSql);
     }
 
     protected abstract <E> List<E> doQuery(MappedStatement ms, Object parameter, ResultHandler resultHandler, BoundSql boundSql);
 
-
     @Override
     public Transaction getTransaction() {
-        if(closed){
+        if (closed) {
             throw new RuntimeException("Executor was closed.");
         }
         return transaction;
@@ -56,11 +52,10 @@ public abstract class BaseExecutor implements Executor{
 
     @Override
     public void commit(boolean required) throws SQLException {
-        if(closed){
-            throw new RuntimeException("Cannot commit,transaction is already closed");
+        if (closed) {
+            throw new RuntimeException("Cannot commit, transaction is already closed");
         }
-
-        if(required){
+        if (required) {
             transaction.commit();
         }
     }
@@ -72,7 +67,6 @@ public abstract class BaseExecutor implements Executor{
                 transaction.rollback();
             }
         }
-
     }
 
     @Override
@@ -90,4 +84,5 @@ public abstract class BaseExecutor implements Executor{
             closed = true;
         }
     }
+
 }

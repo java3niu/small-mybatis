@@ -2,17 +2,10 @@ package site.sanniu.mybatis.session.defaults;
 
 import site.sanniu.mybatis.executor.Executor;
 import site.sanniu.mybatis.mapping.MappedStatement;
-import site.sanniu.mybatis.mapping.XNode;
 import site.sanniu.mybatis.session.Configuration;
 import site.sanniu.mybatis.session.SqlSession;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author sanniu
@@ -22,24 +15,23 @@ import java.util.Map;
 public class DefaultSqlSession implements SqlSession {
 
     private Configuration configuration;
-
     private Executor executor;
 
-    public DefaultSqlSession(Configuration configuration,Executor executor) {
+    public DefaultSqlSession(Configuration configuration, Executor executor) {
         this.configuration = configuration;
         this.executor = executor;
     }
 
     @Override
     public <T> T selectOne(String statement) {
-        MappedStatement mappedStatement = configuration.getMappedStatement(statement);
-        return (T) ("你被代理了！" + statement);
+        return this.selectOne(statement, null);
     }
 
     @Override
     public <T> T selectOne(String statement, Object parameter) {
-        MappedStatement mappedStatement = configuration.getMappedStatement(statement);
-        return (T) ("你被代理了！" + "\n方法：" + statement + "\n入参：" + parameter + "\n待执行SQL：" + mappedStatement.getSql());
+        MappedStatement ms = configuration.getMappedStatement(statement);
+        List<T> list = executor.query(ms, parameter, Executor.NO_RESULT_HANDLER, ms.getSqlSource().getBoundSql(parameter));
+        return list.get(0);
     }
 
     @Override
@@ -51,6 +43,8 @@ public class DefaultSqlSession implements SqlSession {
     public Configuration getConfiguration() {
         return configuration;
     }
+
+
 
 
 }

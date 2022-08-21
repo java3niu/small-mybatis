@@ -1,7 +1,6 @@
 package site.sanniu.mybatis.executor.statement;
 
 import site.sanniu.mybatis.executor.Executor;
-import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.session.ResultHandler;
@@ -16,10 +15,10 @@ import java.util.List;
  * @Description //TODO $
  * @Date $ $
  **/
-public class SimpleStatementHandler extends BaseStatementHandler{
+public class SimpleStatementHandler extends BaseStatementHandler {
 
-    public SimpleStatementHandler(Executor executor, MappedStatement mappedStatement, ResultHandler resultHandler, Object parameterObject, BoundSql boundSql) {
-        super(executor, mappedStatement,resultHandler, parameterObject, boundSql);
+    public SimpleStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, ResultHandler resultHandler, BoundSql boundSql) {
+        super(executor, mappedStatement, parameterObject, resultHandler, boundSql);
     }
 
     @Override

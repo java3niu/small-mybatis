@@ -1,7 +1,6 @@
 package site.sanniu.mybatis.executor.statement;
 
 import site.sanniu.mybatis.executor.Executor;
-import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.session.ResultHandler;
@@ -21,14 +20,13 @@ import java.util.List;
 public class PreparedStatementHandler extends BaseStatementHandler {
 
     public PreparedStatementHandler(Executor executor, MappedStatement mappedStatement, Object parameterObject, ResultHandler resultHandler, BoundSql boundSql) {
-        super(executor, mappedStatement, resultHandler,parameterObject, boundSql);
+        super(executor, mappedStatement, parameterObject, resultHandler, boundSql);
     }
 
     @Override
     protected Statement instantiateStatement(Connection connection) throws SQLException {
         String sql = boundSql.getSql();
         return connection.prepareStatement(sql);
-
     }
 
     @Override
@@ -43,5 +41,6 @@ public class PreparedStatementHandler extends BaseStatementHandler {
         ps.execute();
         return resultSetHandler.<E> handleResultSets(ps);
     }
+
 
 }

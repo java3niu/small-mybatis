@@ -1,7 +1,8 @@
 package site.sanniu.mybatis.session;
 
-import site.sanniu.mybatis.builder.xml.XmlConfigBuilder;
+import site.sanniu.mybatis.builder.xml.XMLConfigBuilder;
 import site.sanniu.mybatis.session.defaults.DefaultSqlSessionFactory;
+
 import java.io.Reader;
 
 /**
@@ -12,7 +13,7 @@ import java.io.Reader;
 public class SqlSessionFactoryBuilder {
 
     public SqlSessionFactory build(Reader reader){
-        XmlConfigBuilder xmlConfigBuilder = new XmlConfigBuilder(reader);
+        XMLConfigBuilder xmlConfigBuilder = new XMLConfigBuilder(reader);
         return build(xmlConfigBuilder.parse());
     }
 
