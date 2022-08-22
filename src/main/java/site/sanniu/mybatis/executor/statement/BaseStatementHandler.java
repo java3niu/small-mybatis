@@ -1,6 +1,7 @@
 package site.sanniu.mybatis.executor.statement;
 
 import site.sanniu.mybatis.executor.Executor;
+import site.sanniu.mybatis.executor.parameter.ParameterHandler;
 import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.mapping.BoundSql;
 import site.sanniu.mybatis.mapping.MappedStatement;
@@ -25,6 +26,7 @@ public abstract class BaseStatementHandler implements StatementHandler {
 
     protected final Object parameterObject;
     protected final ResultSetHandler resultSetHandler;
+    protected final ParameterHandler parameterHandler;
 
     protected BoundSql boundSql;
 
@@ -35,6 +37,7 @@ public abstract class BaseStatementHandler implements StatementHandler {
         this.boundSql = boundSql;
 
         this.parameterObject = parameterObject;
+        this.parameterHandler = configuration.newParameterHandler(mappedStatement, parameterObject, boundSql);
         this.resultSetHandler = configuration.newResultSetHandler(executor, mappedStatement, boundSql);
     }
 

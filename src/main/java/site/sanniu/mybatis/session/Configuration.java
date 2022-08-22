@@ -6,6 +6,7 @@ import site.sanniu.mybatis.datasource.pooled.PooledDataSourceFactory;
 import site.sanniu.mybatis.datasource.unpooled.UnpooledDataSourceFactory;
 import site.sanniu.mybatis.executor.Executor;
 import site.sanniu.mybatis.executor.SimpleExecutor;
+import site.sanniu.mybatis.executor.parameter.ParameterHandler;
 import site.sanniu.mybatis.executor.resultset.DefaultResultSetHandler;
 import site.sanniu.mybatis.executor.resultset.ResultSetHandler;
 import site.sanniu.mybatis.executor.statement.PreparedStatementHandler;
@@ -18,6 +19,7 @@ import site.sanniu.mybatis.reflection.factory.DefaultObjectFactory;
 import site.sanniu.mybatis.reflection.factory.ObjectFactory;
 import site.sanniu.mybatis.reflection.wrapper.DefaultObjectWrapperFactory;
 import site.sanniu.mybatis.reflection.wrapper.ObjectWrapperFactory;
+import site.sanniu.mybatis.scripting.LanguageDriver;
 import site.sanniu.mybatis.scripting.LanguageDriverRegistry;
 import site.sanniu.mybatis.scripting.xmltags.XMLLanguageDriver;
 import site.sanniu.mybatis.transaction.Transaction;
@@ -138,7 +140,7 @@ public class Configuration {
         return new PreparedStatementHandler(executor, mappedStatement, parameter, resultHandler, boundSql);
     }
 
-    // 创建元对象
+    // 创建元对象'
     public MetaObject newMetaObject(Object object) {
         return MetaObject.forObject(object, objectFactory, objectWrapperFactory);
     }
@@ -159,6 +161,18 @@ public class Configuration {
     public LanguageDriverRegistry getLanguageRegistry() {
         return languageRegistry;
     }
+
+    public ParameterHandler newParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+        // 创建参数处理器
+        ParameterHandler parameterHandler = mappedStatement.getLang().createParameterHandler(mappedStatement, parameterObject, boundSql);
+        // 插件的一些参数，也是在这里处理，暂时不添加这部分内容 interceptorChain.pluginAll(parameterHandler);
+        return parameterHandler;
+    }
+
+    public LanguageDriver getDefaultScriptingLanguageInstance() {
+        return languageRegistry.getDefaultDriver();
+    }
+
 
 
 }

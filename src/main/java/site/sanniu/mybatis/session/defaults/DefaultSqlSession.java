@@ -44,7 +44,4 @@ public class DefaultSqlSession implements SqlSession {
         return configuration;
     }
 
-
-
-
 }

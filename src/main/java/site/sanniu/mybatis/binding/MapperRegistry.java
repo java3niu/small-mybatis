@@ -22,7 +22,7 @@ public class MapperRegistry {
     }
 
     /**
-     * 将已添加的映射器代理加入到 HashMap
+     * 将已添加的映射器代理加入到 HashMap  key是大类名 value为大类的代理工厂对象
      */
     private final Map<Class<?>, MapperProxyFactory<?>> knownMappers = new HashMap<>();
 

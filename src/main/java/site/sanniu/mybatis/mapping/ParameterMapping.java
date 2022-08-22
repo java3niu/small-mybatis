@@ -2,6 +2,8 @@ package site.sanniu.mybatis.mapping;
 
 import site.sanniu.mybatis.session.Configuration;
 import site.sanniu.mybatis.type.JdbcType;
+import site.sanniu.mybatis.type.TypeHandler;
+import site.sanniu.mybatis.type.TypeHandlerRegistry;
 
 /**
  * 参数映射 #{property,javaType=int,jdbcType=NUMERIC}
@@ -19,6 +21,7 @@ public class ParameterMapping {
     private Class<?> javaType = Object.class;
     // jdbcType=NUMERIC
     private JdbcType jdbcType;
+    private TypeHandler<?> typeHandler;
 
     private ParameterMapping() {
     }
@@ -44,8 +47,15 @@ public class ParameterMapping {
         }
 
         public ParameterMapping build() {
+            if (parameterMapping.typeHandler == null && parameterMapping.javaType != null) {
+                Configuration configuration = parameterMapping.configuration;
+                TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+                parameterMapping.typeHandler = typeHandlerRegistry.getTypeHandler(parameterMapping.javaType, parameterMapping.jdbcType);
+            }
+
             return parameterMapping;
         }
+
     }
 
     public Configuration getConfiguration() {
@@ -63,6 +73,12 @@ public class ParameterMapping {
     public JdbcType getJdbcType() {
         return jdbcType;
     }
+
+    public TypeHandler<?> getTypeHandler() {
+        return typeHandler;
+    }
+
+
 
 
 }

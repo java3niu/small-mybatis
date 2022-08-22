@@ -1,8 +1,12 @@
 package site.sanniu.mybatis.scripting.xmltags;
 
 import org.dom4j.Element;
+import site.sanniu.mybatis.executor.parameter.ParameterHandler;
+import site.sanniu.mybatis.mapping.BoundSql;
+import site.sanniu.mybatis.mapping.MappedStatement;
 import site.sanniu.mybatis.mapping.SqlSource;
 import site.sanniu.mybatis.scripting.LanguageDriver;
+import site.sanniu.mybatis.scripting.defaults.DefaultParameterHandler;
 import site.sanniu.mybatis.session.Configuration;
 
 /**
@@ -19,6 +23,12 @@ public class XMLLanguageDriver implements LanguageDriver {
         XMLScriptBuilder builder = new XMLScriptBuilder(configuration, script, parameterType);
         return builder.parseScriptNode();
     }
+
+    @Override
+    public ParameterHandler createParameterHandler(MappedStatement mappedStatement, Object parameterObject, BoundSql boundSql) {
+        return new DefaultParameterHandler(mappedStatement, parameterObject, boundSql);
+    }
+
 
 
 }

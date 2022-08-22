@@ -11,7 +11,7 @@ import java.util.Map;
  * @Author sanniu
  * @Description 映射器代理类
  **/
-public class MapperProxy<T> implements InvocationHandler {
+public class MapperProxy<T> implements InvocationHandler, Serializable {
 
     private static final long serialVersionUID = -6424540398559729838L;
 
