@@ -5,6 +5,7 @@ import site.sanniu.mybatis.type.TypeAliasRegistry;
 import site.sanniu.mybatis.type.TypeHandlerRegistry;
 
 /**
+ * 构建器的基类，建造者模式
  * @Author sanniu
  * @Description //TODO $
  * @Date $ $

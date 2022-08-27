@@ -3,6 +3,7 @@ package site.sanniu.mybatis.scripting.xmltags;
 import java.util.List;
 
 /**
+ * 混合SQL节点
  * @Author sanniu
  * @Description //TODO $
  * @Date $ $

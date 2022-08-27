@@ -5,6 +5,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import site.sanniu.mybatis.builder.BaseBuilder;
+import site.sanniu.mybatis.builder.MapperBuilderAssistant;
 import site.sanniu.mybatis.io.Resources;
 import site.sanniu.mybatis.session.Configuration;
 
@@ -20,8 +21,9 @@ import java.util.List;
 public class XMLMapperBuilder extends BaseBuilder {
 
     private Element element;
+    // 映射器构建助手
+    private MapperBuilderAssistant builderAssistant;
     private String resource;
-    private String currentNamespace;
 
     public XMLMapperBuilder(InputStream inputStream, Configuration configuration, String resource) throws DocumentException {
         this(new SAXReader().read(inputStream), configuration, resource);
@@ -29,6 +31,7 @@ public class XMLMapperBuilder extends BaseBuilder {
 
     private XMLMapperBuilder(Document document, Configuration configuration, String resource) {
         super(configuration);
+        this.builderAssistant = new MapperBuilderAssistant(configuration, resource);
         this.element = document.getRootElement();
         this.resource = resource;
     }
@@ -42,8 +45,8 @@ public class XMLMapperBuilder extends BaseBuilder {
             configurationElement(element);
             // 标记一下，已经加载过了
             configuration.addLoadedResource(resource);
-            // 绑定映射器到namespace
-            configuration.addMapper(Resources.classForName(currentNamespace));
+            // 绑定映射器到namespace Mybatis 源码方法名 -> bindMapperForNamespace
+            configuration.addMapper(Resources.classForName(builderAssistant.getCurrentNamespace()));
         }
     }
 
@@ -55,20 +58,28 @@ public class XMLMapperBuilder extends BaseBuilder {
     // </mapper>
     private void configurationElement(Element element) {
         // 1.配置namespace
-        currentNamespace = element.attributeValue("namespace");
-        if (currentNamespace.equals("")) {
+        String namespace = element.attributeValue("namespace");
+        if (namespace.equals("")) {
             throw new RuntimeException("Mapper's namespace cannot be empty");
         }
+        builderAssistant.setCurrentNamespace(namespace);
 
         // 2.配置select|insert|update|delete
-        buildStatementFromContext(element.elements("select"));
+        buildStatementFromContext(element.elements("select"),
+                element.elements("insert"),
+                element.elements("update"),
+                element.elements("delete")
+        );
     }
 
     // 配置select|insert|update|delete
-    private void buildStatementFromContext(List<Element> list) {
-        for (Element element : list) {
-            final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, element, currentNamespace);
-            statementParser.parseStatementNode();
+    @SafeVarargs
+    private final void buildStatementFromContext(List<Element>... lists) {
+        for (List<Element> list : lists) {
+            for (Element element : list) {
+                final XMLStatementBuilder statementParser = new XMLStatementBuilder(configuration, builderAssistant, element);
+                statementParser.parseStatementNode();
+            }
         }
     }
 

@@ -10,6 +10,7 @@ import site.sanniu.mybatis.session.Configuration;
 import java.util.HashMap;
 
 /**
+ * 原始SQL源码，比 DynamicSqlSource 动态SQL处理快
  * @Author sanniu
  * @Description //TODO $
  * @Date $ $

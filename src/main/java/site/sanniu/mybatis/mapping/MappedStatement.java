@@ -3,6 +3,8 @@ package site.sanniu.mybatis.mapping;
 import site.sanniu.mybatis.scripting.LanguageDriver;
 import site.sanniu.mybatis.session.Configuration;
 
+import java.util.List;
+
 /**
  * 映射语句类
  * SQL 语句的封装
@@ -18,9 +20,18 @@ public class MappedStatement {
     private SqlSource sqlSource;
     Class<?> resultType;
     private LanguageDriver lang;
+    private List<ResultMap> resultMaps;
 
     MappedStatement() {
         // constructor disabled
+    }
+
+    /**
+     * step-11 新增方法
+     */
+    public BoundSql getBoundSql(Object parameterObject) {
+        // 调用 SqlSource#getBoundSql
+        return sqlSource.getBoundSql(parameterObject);
     }
 
     /**
@@ -43,6 +54,15 @@ public class MappedStatement {
             assert mappedStatement.configuration != null;
             assert mappedStatement.id != null;
             return mappedStatement;
+        }
+
+        public String id() {
+            return mappedStatement.id;
+        }
+
+        public Builder resultMaps(List<ResultMap> resultMaps) {
+            mappedStatement.resultMaps = resultMaps;
+            return this;
         }
 
     }
@@ -71,6 +91,9 @@ public class MappedStatement {
         return lang;
     }
 
+    public List<ResultMap> getResultMaps() {
+        return resultMaps;
+    }
 
 
 }

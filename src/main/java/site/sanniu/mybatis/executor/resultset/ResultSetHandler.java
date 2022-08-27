@@ -12,6 +12,6 @@ import java.util.List;
  **/
 public interface ResultSetHandler {
 
-    <E> List<E> handleResultSets(Statement statement) throws SQLException;
+    <E> List<E> handleResultSets(Statement stmt) throws SQLException;
 
 }

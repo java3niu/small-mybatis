@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
+ * XML配置构建器，建造者模式，继承BaseBuilder
  * @Author sanniu
  * @Description //TODO $
  * @Date $ $

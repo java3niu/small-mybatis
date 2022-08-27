@@ -21,8 +21,8 @@ public class Reflector {
     private static boolean classCacheEnabled = true;
 
     private static final String[] EMPTY_STRING_ARRAY = new String[0];
-
-    private static final Map<Class<?>,Reflector> REFLECTOR_MAP = new ConcurrentHashMap<>();
+    // 线程安全的缓存
+    private static final Map<Class<?>, Reflector> REFLECTOR_MAP = new ConcurrentHashMap<>();
 
     private Class<?> type;
     // get 属性列表
@@ -450,4 +450,6 @@ public class Reflector {
     public static boolean isClassCacheEnabled() {
         return classCacheEnabled;
     }
+
+
 }

@@ -14,28 +14,16 @@ import java.util.List;
  **/
 public interface StatementHandler {
 
-    /**
-     * 准备语句
-     * @param connection
-     * @return
-     * @throws SQLException
-     */
+    /** 准备语句 */
     Statement prepare(Connection connection) throws SQLException;
 
-    /**
-     * 参数化
-     * @param statement
-     * @throws SQLException
-     */
+    /** 参数化 */
     void parameterize(Statement statement) throws SQLException;
 
-    /**
-     * 执行查询
-     * @param statement
-     * @param resultHandler
-     * @param <E>
-     * @return
-     * @throws SQLException
-     */
+    /** 执行更新 */
+    int update(Statement statement) throws SQLException;
+
+    /** 执行查询 */
     <E> List<E> query(Statement statement, ResultHandler resultHandler) throws SQLException;
+
 }

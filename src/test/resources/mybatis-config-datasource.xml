@@ -9,9 +9,9 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://192.168.137.100:3306/test?allowPublicKeyRetrieval=true&amp;useSSL=false"/>
-                <property name="username" value="root"/>
-                <property name="password" value="admin"/>
+                <property name="url" value="jdbc:mysql://192.168.137.100:3306/test?characterEncoding=utf8&amp;serverTimezone=Asia/Shanghai&amp;useSSL=false&amp;allowPublicKeyRetrieval=true"/>
+                <property name="username" value="movie_user"/>
+                <property name="password" value="123456"/>
             </dataSource>
         </environment>
     </environments>
